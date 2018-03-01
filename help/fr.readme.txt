@@ -1,0 +1,39 @@
+Créer/éditer un niveau :
+
+	- ouvrir /scripts/data/levels.js.
+	- dans l'objet "levels" :
+		- chaque niveau est représenté par un tableau à deux dimension (lignes / colonnes) et est associé à une ID.
+		- les niveaux apparaîtront dans l'ordre croissant de leurs ID.
+		- chaque caractère contenu dans un tableau de niveau représente un objet, qui lui est associé dans /scripts/data/assetsConfig.js
+		- pour éditer un niveau, modifier l'array associé à l'ID du niveau.
+		- pour créer un niveau, ajouter une propriété à "levels" nommée selon l'ID suivant le dernier niveau défini,
+		puis lui associer un tableau selon le modèle des niveaux donnés par défaut.
+
+
+
+Ajouter un nouvel élément au jeu :
+
+	- dans /help/, copier le fichier "TemplateName.js".
+	- dans /scripts/app/gameObjects/, coller le fichier.
+	- renommer le fichier avec le nom de votre élément.
+	- dans le fichier, remplacer "TemplateName" par ce même nom partout où il apparaît (lignes 7 et 20).
+	
+	- ouvrir /scripts/data/assetsConfig.js.
+	- dans le fichier :
+		- ajouter dans l'en-tête l'URL du fichier JavaScript ajouté auparavant ("app/gameObjects/XXX").
+		- ajouter le nom de l'élément dans les paramètres de la fonction anonyme, en dessous des URL.
+		- ajouter une nouvelle propriété à l'objet "assetsConfig"
+		- cette propriété doit être un objet possédant lui-même :
+			- une propriété "name" contenant le nom de votre élément (plus exactement une référence au constructeur --> pas de guillemets).
+			- une propriété "hasDirection" contenant un booléen ; si elle est égale à "true", votre élément aura une représentation différente selon son orientation.
+			
+	- dans /assets/ :
+		- si "hasDirection" est "false" pour votre élément, ajouter un fichier portant le nom de l'élément et l'extension ".png".
+		- si "hasDirection" est "true", créer un dossier portant le nom de votre élément, puis y ajouter quatre fichier portant le nom de votre élément suivi respectivement de  "_down", "_left", "_right" et "_up" et l'extension ".png" (voir /assets/player/).
+		- une image est à disposition pour tester (/help/test.png).
+		- par défaut, la taille de chaque élément est de 50px * 50px ; pour modifier cette valeur, voir /scripts/Main.js
+			
+	- pour ajouter des comportements à votre élément, modifier le fichier JavaScript créé plus tôt (app/gameObjects/XXX.js).
+	
+	
+	
