@@ -36,25 +36,7 @@ define([
         }
     
         /**
-         * @see GameObject
-         * @param {Point} direction 
-         */
-        askMove(direction, hasDirection) {
-            this.callbackDirection = direction;
-            
-            var cells = super.askMove(direction);
-    
-            var fromCell = cells.fromCell;
-            var toCell = cells.toCell;
-            
-            switch (toCell.content.constructor.name) {
-                case "BoxStorage":
-                    this.doMove(fromCell, toCell);
-                    break;
-            }
-        }
-    
-        /**
+         * Checks if the box is on a storage location and adds a point if it is.
          * @see GameObject
          * @param {Cell} fromCell 
          * @param {Cell} toCell 

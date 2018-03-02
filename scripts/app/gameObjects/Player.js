@@ -49,25 +49,14 @@ define([
         }
 
         /**
-         * @see GameObject  
-         * @param {Point} direction  
+         * @see GameObject
+         * @param {Cell} fromCell 
+         * @param {Cell} toCell 
          */
-        askMove(direction) {
-            var cells = super.askMove(direction);
-
-            var fromCell = cells.fromCell;
-            var toCell = cells.toCell;
-            
-            if (!toCell.content) return;
-            switch (toCell.content.constructor.name) {
-                case "Box":
-                    toCell.content.callbackPlayer = this;
-                    toCell.content.askMove(direction);
-                    break;
-                case "BoxStorage":
-                    this.doMove(fromCell, toCell);
-                    break;
-            }
+        actionBox(fromCell, toCell) {
+            toCell.content.callbackPlayer = this;
+            toCell.content.callbackDirection = this.direction;
+            toCell.content.askMove(this.direction);
         }
 
         /**

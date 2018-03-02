@@ -27,7 +27,7 @@ define([
                 /**
                  * @type {Point}
                  */
-                this.lastDirection = DIRECTIONS.DOWN;
+                this.direction = DIRECTIONS.DOWN;
                 
             }
     
@@ -61,10 +61,10 @@ define([
 
             if (this.hasDirection) {
                 path += "/" + assetName;
-                if (this.lastDirection === DIRECTIONS.DOWN) path += "_down";
-                else if (this.lastDirection === DIRECTIONS.LEFT) path += "_left";
-                else if (this.lastDirection === DIRECTIONS.RIGHT) path += "_right";
-                else if (this.lastDirection === DIRECTIONS.UP) path += "_up";
+                if (this.direction === DIRECTIONS.DOWN) path += "_down";
+                else if (this.direction === DIRECTIONS.LEFT) path += "_left";
+                else if (this.direction === DIRECTIONS.RIGHT) path += "_right";
+                else if (this.direction === DIRECTIONS.UP) path += "_up";
             }
 
             path += ".png";
@@ -75,26 +75,69 @@ define([
         }
     
         /**
-         * Find the target Cell depending on the movement direction.
-         * 
+         * Find the target Cell depending on the movement direction and chooses an action to execute depending on its content.
          * @param {Point} direction 
          * @returns {Object} Returns the cells concerned by the movement so they can be used in the overrides in subclasses.
          */
         askMove(direction) {
+            console.log(this.position);
+            console.log(direction);
+            
+            
             var toCoords = Point.sum(this.position, direction);
             var fromCell = Main.level.getCell(this.position);
             var toCell = Main.level.getCell(toCoords);
     
             this.potentialPosition = toCoords;
             if (this.hasDirection) {
-                this.lastDirection = direction;
+                this.direction = direction;
                 this.setImage(this.constructor.name);
             }
             
-    
-            if (!toCell.content) this.doMove(fromCell, toCell);
-            
-            return {fromCell, toCell};
+            if (!toCell.content) {
+                this.actionNull(fromCell, toCell);
+                return;
+            }
+
+            // /!\ The action is chosen by looking for a method named "action" + the name of the constructor of the targeted object. Please name your methods carefully.
+            var functionToCall = this["action" + toCell.content.constructor.name];
+            if (typeof functionToCall === "function") functionToCall.call(this, fromCell, toCell);
+        }
+
+        /**
+         * Called if the objects asks to move on an empty cell.
+         * 
+         * @param {Cell} fromCell 
+         * @param {Cell} toCell 
+         */
+        actionNull(fromCell, toCell) {
+            this.doMove(fromCell, toCell);
+        }
+
+        /**
+         * @param {Cell} fromCell 
+         * @param {Cell} toCell 
+         */
+        actionWall(fromCell, toCell) {}
+
+        /**
+         * @param {Cell} fromCell 
+         * @param {Cell} toCell 
+         */
+        actionPlayer(fromCell, toCell) {}
+
+        /**
+         * @param {Cell} fromCell 
+         * @param {Cell} toCell 
+         */
+        actionBox(fromCell, toCell) {}
+
+        /**
+         * @param {Cell} fromCell 
+         * @param {Cell} toCell 
+         */
+        actionBoxStorage(fromCell, toCell) {
+            this.doMove(fromCell, toCell);
         }
     
         /**

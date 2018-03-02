@@ -33,7 +33,8 @@ Ajouter un nouvel élément au jeu :
 		- une image est à disposition pour tester (/help/test.png).
 		- par défaut, la taille de chaque élément est de 50px * 50px ; pour modifier cette valeur, voir /scripts/Main.js
 			
-	- pour ajouter des comportements à votre élément, modifier le fichier JavaScript créé plus tôt (app/gameObjects/XXX.js).
+	- pour ajouter des comportements à votre élément, modifier le fichier JavaScript créé plus tôt (app/gameObjects/XXX.js) :
+		- pour modifier le comportement de votre élément quand il renctontre un autre élément du jeu, lui ajouter une méthode nommée "action" + le nom de votre élément. Elle sera automatiquement appelée par la suite.
 	
 	
 	

@@ -1,4 +1,4 @@
 # Sokoban
-A generic but easy to mod sokoban.
+A generic sokoban game with modding support.
 
 See [your language].readme.txt for help about adding features.
