@@ -151,7 +151,7 @@ class Point {
 	 * @param {Point} pointB
 	 */
 	static sum(pointA, pointB) {
-		return new Point(pointA.x + pointB.x,pointA.y + pointB.y);
+		return new Point(pointA.x + pointB.x, pointA.y + pointB.y);
 	}
 
 	/**
@@ -231,17 +231,29 @@ class Point {
 	}
 
 	/**
+	 * Rotates the vector represented by the Point.
+	 * @param {Number} radAngle 
+	 */
+	rotate(radAngle) {
+		var newAngle = this.angle + radAngle;
+		var length = this.length;
+		
+		this.x = length * Math.cos(newAngle);
+		this.y = length * Math.sin(newAngle);
+	}
+
+	/**
 	 * Returns the length of this Point.
 	 */
 	get length() {
-		return Math.sqrt(x * x + y * y);
+		return Math.sqrt(this.x * this.x + this.y * this.y);
 	}
 
 	/**
 	 * Returns the direction of this Point.
 	 */
 	get angle() {
-		return Math.atan2(y, x);
+		return Math.atan2(this.y, this.x);
 	}
 
 }
