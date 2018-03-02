@@ -32,9 +32,9 @@ Ajouter un nouvel élément au jeu :
 		- si "hasDirection" est "true", créer un dossier portant le nom de votre élément, puis y ajouter quatre fichier portant le nom de votre élément suivi respectivement de  "_down", "_left", "_right" et "_up" et l'extension ".png" (voir /assets/player/).
 		- une image est à disposition pour tester (/help/test.png).
 		- par défaut, la taille de chaque élément est de 50px * 50px ; pour modifier cette valeur, voir /scripts/Main.js
+
+
+Ajouter des comportements aux éléments du jeu :
 			
-	- pour ajouter des comportements à votre élément, modifier le fichier JavaScript créé plus tôt (app/gameObjects/XXX.js) :
-		- pour modifier le comportement de votre élément quand il renctontre un autre élément du jeu, lui ajouter une méthode nommée "action" + le nom de votre élément. Elle sera automatiquement appelée par la suite.
-	
-	
-	
+	- pour modifier le comportement d'un élément A quand il renctontre un élément B, lui ajouter à A une méthode nommée "action" + le nom de B. Elle sera automatiquement appelée par la suite.
+	- pour modifier le comportement par défaut des autres éléments quand il rencontre un élément C, ajouter dans /scripts/app/gameObjects/GameObject.js une méthode "action" + le nom de C. Elle pourra être override dans les sous classes de GameObject afin de créer des comportements spécifiques.

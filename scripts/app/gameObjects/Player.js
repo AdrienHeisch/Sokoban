@@ -49,6 +49,7 @@ define([
         }
 
         /**
+         * The player can push boxes.
          * @see GameObject
          * @param {Cell} fromCell 
          * @param {Cell} toCell 

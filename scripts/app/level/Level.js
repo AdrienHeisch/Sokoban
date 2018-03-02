@@ -25,12 +25,6 @@ define([
              * @type {Array.<Array.<Cell>>}
              */
             this.grid = [];
-    
-            /**
-             * Reference to the player.
-             * @type {Player}
-             */
-            this.player;
 
             /**
              * Current number of points.

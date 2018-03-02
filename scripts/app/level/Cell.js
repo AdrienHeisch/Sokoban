@@ -8,7 +8,7 @@ define([
          * A cell of the level grid, contains one element or nothing.
          * 
          * @param {Function} elementType The constructor of the object type.
-         * @param {Point} position
+         * @param {Point} position The position of the cell in the level.
          * @param {Boolean} hasDirection
          */
         constructor(elementType, position, hasDirection) {

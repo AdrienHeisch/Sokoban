@@ -80,10 +80,6 @@ define([
          * @returns {Object} Returns the cells concerned by the movement so they can be used in the overrides in subclasses.
          */
         askMove(direction) {
-            console.log(this.position);
-            console.log(direction);
-            
-            
             var toCoords = Point.sum(this.position, direction);
             var fromCell = Main.level.getCell(this.position);
             var toCell = Main.level.getCell(toCoords);
