@@ -11,8 +11,8 @@ define([
          * @param {Point} position 
          * @param {Boolean} hasDirection 
          */
-        constructor(position, hasDirection) {
-            super(position, hasDirection);
+        constructor(position, hasDirection, params) {
+            super(position, hasDirection, params);
 
             /**
              * Reference to a binded keyboard handler, used to remove the listener.
@@ -44,6 +44,9 @@ define([
                 case 68:
                 case 39:
                     this.askMove(DIRECTIONS.RIGHT);
+                    break;
+                case 82:
+                    Main.retryButton.trigger("mousedown");
                     break;
             }
         }

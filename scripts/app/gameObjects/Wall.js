@@ -11,8 +11,8 @@ define([
          * @param {Point} position 
          * @param {Boolean} hasDirection 
          */
-        constructor(position, hasDirection) {
-            super(position, hasDirection);
+        constructor(position, hasDirection, params) {
+            super(position, hasDirection, params);
         }
 
     }

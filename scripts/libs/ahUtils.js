@@ -170,7 +170,7 @@ class Point {
 	 * @param {Point} pointA 
 	 * @param {Point} pointB 
 	 */
-	static same(pointA, pointB) {
+	static areEqual(pointA, pointB) {
 		return pointA.x === pointB.x && pointA.y === pointB.y;
 	}
 
@@ -180,6 +180,17 @@ class Point {
 	 * @param {Number} y Vertical coordinate.
 	 */
 	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	/**
+	 * Affects new values to the Point's coordinates.
+	 *
+	 * @param {Number} x
+	 * @param {Number} y
+	 */
+	setTo(x, y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -231,15 +242,17 @@ class Point {
 	}
 
 	/**
-	 * Rotates the vector represented by the Point.
-	 * @param {Number} radAngle 
+	 * Rotates the vector represented by the Point. There might be approximations in the results, consider using Math.round after this.
+	 * @param {Number} radAngle Angle to add, in radians.
 	 */
 	rotate(radAngle) {
-		var newAngle = this.angle + radAngle;
-		var length = this.length;
-		
-		this.x = length * Math.cos(newAngle);
-		this.y = length * Math.sin(newAngle);
+		var cs = Math.cos(radAngle);
+		var sn = Math.sin(radAngle);
+
+		var newX = this.x * cs - this.y * sn;
+		var newY = this.x * sn + this.y * cs;
+
+		this.setTo(newX, newY);
 	}
 
 	/**

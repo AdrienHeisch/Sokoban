@@ -34,7 +34,7 @@ require([
             position: "absolute",
             right: 10,
             top: 10
-        }).click(function() { Main.changeLevel(0); }).appendTo($("body")),
+        }).mousedown(function() { Main.changeLevel(0); }).appendTo($("body")),
         
         /**
          * Removes the current level and creates the next one.
@@ -45,7 +45,10 @@ require([
             
             this.levelId += change;
             
-            if (levels[this.levelId]) this.level = new Level(levels[this.levelId]);
+            if (levels[this.levelId]) {
+                this.level = new Level();
+                this.level.build(levels[this.levelId]);
+            }
             else $("<div></div>").text("You win !").css("font-size", "50px").appendTo($("body"));
         }
         

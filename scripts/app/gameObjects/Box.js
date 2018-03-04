@@ -11,10 +11,8 @@ define([
          * @param {Point} position 
          * @param {Boolean} hasDirection 
          */
-        constructor(position, hasDirection) {
-            super(position, hasDirection);
-    
-            Main.level.winCondition++;
+        constructor(position, hasDirection, params) {
+            super(position, hasDirection, params);
 
             /**
              * Is set to true when the box is on a storage location.
@@ -34,6 +32,35 @@ define([
              */
             this.callbackDirection = null;
         }
+
+        /**
+         * Removes a point if the box is pushed from a storage location.
+         * @param {Cell} fromCell 
+         * @param {Cell} toCell 
+         */
+        actionNull(fromCell, toCell) {
+            if (this.isOnStorage) {
+                this.isOnStorage = false;
+                this.setImage(this.constructor.name);
+                Main.level.addPoints(-1);
+            }
+            super.actionNull(fromCell, toCell);
+        }
+
+        /**
+         * Adds a point if the box is pushed on a storage location.
+         * @param {Cell} fromCell 
+         * @param {Cell} toCell 
+         */
+        actionBoxStorage(fromCell, toCell) {
+            var endLevel;
+            if (!this.isOnStorage) {
+                this.isOnStorage = true;
+                this.setImage("BoxWin");
+                endLevel = Main.level.addPoints(1);
+            }
+            if (!endLevel) super.actionBoxStorage(fromCell, toCell);
+        }
     
         /**
          * Checks if the box is on a storage location and adds a point if it is.
@@ -42,21 +69,8 @@ define([
          * @param {Cell} toCell 
          */
         doMove(fromCell, toCell) {
-            var endLevel = false;
-
-            if (toCell.content && toCell.content.constructor.name === "BoxStorage" && !this.isOnStorage) {
-                this.isOnStorage = true;
-                this.setImage("BoxWin");
-                endLevel = Main.level.addPoints(1); 
-            }
-            if ((!toCell.content || (toCell.content && toCell.content.constructor.name !== "BoxStorage")) && this.isOnStorage) {
-                this.isOnStorage = false;
-                this.setImage(this.constructor.name);
-                endLevel = Main.level.addPoints(-1);
-            }
-            
             super.doMove(fromCell, toCell);
-            if (!endLevel) this.callbackPlayer.askMove(this.callbackDirection);
+            this.callbackPlayer.askMove(this.callbackDirection);
         }
     
     }

@@ -8,14 +8,15 @@ define([
          * 
          * @param {Point} position The position of this object in the level grid.
          * @param {Boolean} hasDirection Determines if the object must use a different sprite for each direction.
+         * @param {Object} params
          */
-        constructor(position, hasDirection) {
+        constructor(position, hasDirection, params) {
             /**
              * Position in the level grid.
              * @type {Point}
              */
             this.position = position;
-    
+
             /**
              * Indicates if the object has oriented assets.
              * @type {Boolean}
@@ -27,7 +28,7 @@ define([
                 /**
                  * @type {Point}
                  */
-                this.direction = DIRECTIONS.DOWN;
+                this.direction = DIRECTIONS[params && params.direction ? params.direction : "DOWN"].clone();
                 
             }
     
@@ -43,7 +44,7 @@ define([
              */
             this.graphics = $("<div></div>");
     
-            this.setImage(this.constructor.name);
+            this.setImage();
     
             this.graphics.css({
                 width: CELL_WIDTH,
@@ -54,17 +55,19 @@ define([
         /**
          * Changes the asset of the object.
          * 
-         * @param {String} assetName 
+         * @param {String} [assetName] 
          */
         setImage(assetName) {
-            var path = "assets/" + assetName;
+            if (!assetName) assetName = this.constructor.name;
 
-            if (this.hasDirection) {
+            var path = "assets/" + assetName;;
+
+            if (this.hasDirection) {                
                 path += "/" + assetName;
-                if (this.direction === DIRECTIONS.DOWN) path += "_down";
-                else if (this.direction === DIRECTIONS.LEFT) path += "_left";
-                else if (this.direction === DIRECTIONS.RIGHT) path += "_right";
-                else if (this.direction === DIRECTIONS.UP) path += "_up";
+                if (Point.areEqual(this.direction, DIRECTIONS.DOWN)) path += "_down";
+                else if (Point.areEqual(this.direction, DIRECTIONS.LEFT)) path += "_left";
+                else if (Point.areEqual(this.direction, DIRECTIONS.RIGHT)) path += "_right";
+                else if (Point.areEqual(this.direction, DIRECTIONS.UP)) path += "_up";
             }
 
             path += ".png";
@@ -87,7 +90,7 @@ define([
             this.potentialPosition = toCoords;
             if (this.hasDirection) {
                 this.direction = direction;
-                this.setImage(this.constructor.name);
+                this.setImage();
             }
             
             if (!toCell.content) {

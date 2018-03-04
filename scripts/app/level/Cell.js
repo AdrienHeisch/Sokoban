@@ -10,8 +10,9 @@ define([
          * @param {Function} elementType The constructor of the object type.
          * @param {Point} position The position of the cell in the level.
          * @param {Boolean} hasDirection
+         * @param {Object} params
          */
-        constructor(elementType, position, hasDirection) {
+        constructor(elementType, position, hasDirection, params) {
             /**
              * This is the DOM container for the graphic element that will be added later.
              * @type {JQuery}
@@ -29,7 +30,7 @@ define([
             this.content = null;
             
             if (elementType) {
-                this.content = new elementType(position, hasDirection);
+                this.content = (params ? new elementType(position, hasDirection, params) : new elementType(position, hasDirection));
                 this.refreshContent();
             }
     

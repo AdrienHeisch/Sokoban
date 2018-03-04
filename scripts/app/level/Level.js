@@ -8,11 +8,9 @@ define([
     class Level {
     
         /**
-         * Creates a logical grid of graphic cells from a map of IDs.
-         * 
-         * @param {Array.<Array.<Number>>} levelMap A two-dimensional table of numbers, representing the ID of each cells.
+         * Creates a logical grid of graphic cells.
          */
-        constructor(levelMap) {
+        constructor() {
 
             /**
              * Graphic container of the level's content.
@@ -37,16 +35,26 @@ define([
              * @type {Number}
              */
             this.winCondition = 0;
-    
-            //This converts the map into an array of Cells.
-            var row, cell;
+        }
+
+        /**
+         * This converts the map into an array of Cells.
+         * @param {Array.<Array.<Number>>} levelMap A two-dimensional table of numbers, representing the ID of each cells.
+         */
+        build(levelMap) {
+            var row, cell, id;
             for (let i = 0; i < levelMap.length; i++) {
                 row = [];
                 this.grid.push(row);
                 for (let j = 0; j < levelMap[i].length; j++) {
-                    if (levelMap[i][j] === 3) this.winCondition++;
-                    var id = assetsConfig[levelMap[i][j]];
-                    cell = new Cell(id.name, new Point(j, i), id.hasDirection);
+                    if (typeof levelMap[i][j] === "number") {
+                        id = assetsConfig[levelMap[i][j]];
+                        cell = new Cell(id.name, new Point(j, i), id.hasDirection);
+                    } else if (levelMap[i][j].constructor === Array) {
+                        id = assetsConfig[levelMap[i][j][0]];
+                        cell = new Cell(id.name, new Point(j, i), id.hasDirection, levelMap[i][j][1]);
+                    } else throw new Error("Level " + Main.levelId + ": {\n\tx: " + i + ", \n\ty: " + j + "\n}\n\nInvalid character.")
+
                     row.push(cell);
                     cell.graphics.css({
                         left: CELL_WIDTH * j,
@@ -54,7 +62,6 @@ define([
                     }).appendTo(this.graphics);
                 }
             }
-            ////
         }
     
         /**
