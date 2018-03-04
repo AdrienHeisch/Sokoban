@@ -25,16 +25,6 @@ require([
          * @type {Number}
          */
         levelId: 1,
-    
-        /**
-         * A button that reloads the current level.
-         * @type {JQuery}
-         */
-        retryButton: $("<button>RETRY</button>").css({
-            position: "absolute",
-            right: 10,
-            top: 10
-        }).mousedown(function() { Main.changeLevel(0); }).appendTo($("body")),
         
         /**
          * Removes the current level and creates the next one.
@@ -50,6 +40,13 @@ require([
                 this.level.build(levels[this.levelId]);
             }
             else $("<div></div>").text("You win !").css("font-size", "50px").appendTo($("body"));
+        },
+
+        /**
+         * Reloads the current level.
+         */
+        retry: function() {
+            Main.changeLevel(0);
         }
         
     }

@@ -16,7 +16,7 @@ define([
              * Graphic container of the level's content.
              * @type {JQuery}
              */
-            this.graphics = $("<div></div>").appendTo($("body"));
+            this.graphics = $("#levelContainer");
 
             /**
              * Logical grid of the level.
@@ -98,7 +98,7 @@ define([
                     this.grid[i][j].destroy();
                 }
             }
-            this.graphics.remove();
+            this.graphics.empty();
         }
     
     }

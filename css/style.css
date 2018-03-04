@@ -1,3 +1,10 @@
 .cell {
     position: absolute;
 }
+
+#help {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    text-align: right;
+}

@@ -46,7 +46,7 @@ define([
                     this.askMove(DIRECTIONS.RIGHT);
                     break;
                 case 82:
-                    Main.retryButton.trigger("mousedown");
+                    Main.retry();
                     break;
             }
         }
