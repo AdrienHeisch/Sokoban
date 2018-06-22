@@ -41,7 +41,7 @@ define([
         actionNull(fromCell, toCell) {
             if (this.isOnStorage) {
                 this.isOnStorage = false;
-                this.setImage(this.constructor.name);
+                this.setImage();
                 Main.level.addPoints(-1);
             }
             super.actionNull(fromCell, toCell);
@@ -56,7 +56,7 @@ define([
             var endLevel;
             if (!this.isOnStorage) {
                 this.isOnStorage = true;
-                this.setImage("BoxWin");
+                this.setImage("boxWin");
                 endLevel = Main.level.addPoints(1);
             }
             if (!endLevel) super.actionBoxStorage(fromCell, toCell);

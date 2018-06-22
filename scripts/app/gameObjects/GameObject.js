@@ -58,9 +58,7 @@ define([
          * @param {String} [assetName] 
          */
         setImage(assetName) {
-            if (!assetName) assetName = this.constructor.name;
-
-            assetName = assetName.toLowerCase();
+            if (!assetName) assetName = this.constructor.name.charAt(0).toLowerCase() + this.constructor.name.slice(1);
 
             var path = "assets/" + assetName;
 
